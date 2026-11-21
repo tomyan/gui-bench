@@ -133,5 +133,8 @@ fn the_list_scenario_reports_the_supported_dashboard_command() {
     let list = run(Scenario::List { count: 10 }).unwrap_err();
 
     // Then
-    assert!(list.contains("does not implement the list scenario") && list.contains("vapors-bench --scenario app"));
+    assert!(
+        list.contains("does not implement the list scenario")
+            && list.contains("vapors-bench --scenario app")
+    );
 }

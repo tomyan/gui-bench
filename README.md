@@ -121,12 +121,14 @@ flagged invalid if it stays disturbed.
 From the repository root, build the dashboard and run a 30-row check:
 
 ```sh
-just build-app vapors
-just quick --scenarios app --frameworks vapors --rows 30
+(cd apps/vapors && cargo build --locked --release)
+(cd runner && cargo +1.99.1 build --release)
+env -u DISPLAY -u WAYLAND_DISPLAY runner/target/release/gui-bench \
+    --quick --scenarios app --frameworks vapors --rows 30
 ```
 
-For the comparison, build zgui with `just build-app zgui`, then run
-`just full --scenarios app --frameworks zgui,vapors --rows 30,300,1000,3000`.
+For the comparison, build zgui with `just build-app zgui`, then replace the
+final line above with `--full --scenarios app --frameworks zgui,vapors --rows 30,300,1000,3000`.
 The Vapors app pins Rust 1.99.1 and a framework revision in its own directory.
 It implements the dashboard only. The runner records its hand-built parts under
 `builds.vapors.flags` in the run index.
